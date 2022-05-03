@@ -1,0 +1,74 @@
+"""Lottery simulator to remind me that winning the lottery isn't a retirement plan."""
+
+import random
+
+while True:
+    userNums = input("To play the lottery enter 5 different numbers from 1 to 69 with a space between each number: ")
+
+    nums = userNums.split()
+    if len(nums) != 5:
+        print("You didn't enter the right amount of numbers")
+        continue
+
+    try:
+        for i in range(5):
+            nums[i] = int(nums[i])
+    except ValueError:
+        print("You didn't enter numbers.")
+        continue
+    for i in range(5):
+        if not (1 <= nums[i] <= 69):
+            print("The numbers need to be between 1 and 69 inclusive")
+            continue
+    for i in range(5):
+        if len(set(nums)) != 5:
+            print("The numbers need to be different.")
+            continue
+    break
+
+while True:
+    userPB = input("Enter the PowerBall number between 1 and 26: ")
+    try:
+        userPBNum = int(userPB)
+    except ValueError:
+        print("You didn't enter a number.")
+        continue
+    if not (1 <= userPBNum <= 26):
+        print("The Powerball number needs to be between 1 and 26 inclusive")
+        continue
+    break
+
+
+while True:
+    tries = input("How many times do you want to play (max 1,000,000 tries): ")
+    try:
+        userTries = int(tries)
+    except ValueError:
+        print("You didn't enter a number.")
+        continue
+    if not (1 <= userTries <= 1000000):
+        print("That value isn't in the range")
+        continue
+    break
+
+userPrice = userTries * 2
+print(f"It will cost {userPrice} dollars to play {userTries} times.")
+
+possibleNums = list(range(1, 70))
+for i in range(userTries):
+    random.shuffle(possibleNums)
+    winningNums = possibleNums[0:5]
+    winningPB = random.randint(1, 26)
+
+    print("The winning numbers are: ", end="")
+    allWinningNums = ""
+    for i in range(5):
+        allWinningNums += str(winningNums[i]) + " "
+    allWinningNums += str(winningPB)
+    print(allWinningNums)
+
+    if set(nums) == set(winningNums) and userPBNum == winningPB:
+        print("You beat the odds and won the PowerBall lottery")
+        break
+    else:
+        print(f"You didn't win. As a reminder you lost {userPrice} dollars.")
